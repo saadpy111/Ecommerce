@@ -2,12 +2,6 @@
 using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Data.Contexts;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Catalog.Infrastructure.Repositories
 {
@@ -40,7 +34,7 @@ namespace Catalog.Infrastructure.Repositories
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
             return await _context.Products.Find(_ => true).ToListAsync();
-        }
+        }  
 
         public async Task<IEnumerable<Product>> GetAllProductsByBrand(string name)
         {
