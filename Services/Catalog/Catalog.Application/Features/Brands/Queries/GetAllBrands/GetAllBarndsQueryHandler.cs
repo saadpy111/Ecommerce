@@ -24,7 +24,7 @@ namespace Catalog.Application.Features.Brands.Queries.GetAllBrands
         public async Task<GetAllBarndsQueryResponse> Handle(GetAllBarndsQueryRequest request, CancellationToken cancellationToken)
         {
             var brands = await _brandRepository.GetAllBrands();
-            var brandResponse = _mapper.Map<List<ProductBrand>, List<ProductBrandDro>>(brands.ToList());
+            var brandResponse = _mapper.Map<List<ProductBrand>, List<ProductBrandDto>>(brands.ToList());
             return new GetAllBarndsQueryResponse()
             {
                 ProductBrands = brandResponse

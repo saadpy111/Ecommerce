@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.Application.Dtos
 {
-    public class ProductBrandDro
+    public class ProductBrandDto
     {
 
         [BsonId]

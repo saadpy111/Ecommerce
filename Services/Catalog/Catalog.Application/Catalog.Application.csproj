@@ -11,12 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Products\GetAllProducts\" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="16.1.1" />
-    <PackageReference Include="MediatR" Version="14.1.0" />
+    <Folder Include="Features\Products\Queries\GetAllProductsByName\" />
   </ItemGroup>
 
 </Project>

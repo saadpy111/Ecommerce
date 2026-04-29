@@ -10,6 +10,6 @@ namespace Catalog.Application.Features.Brands.Queries.GetAllBrands
 {
     public class GetAllBarndsQueryResponse
     {
-        public List<ProductBrandDro>  ProductBrands { get; set; }
+        public List<ProductBrandDto>  ProductBrands { get; set; }
     }
 }
