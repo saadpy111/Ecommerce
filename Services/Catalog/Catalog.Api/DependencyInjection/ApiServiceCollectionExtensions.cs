@@ -1,6 +1,5 @@
 using Catalog.Application.DependencyInjection;
 using Catalog.Infrastructure.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi;
 
 

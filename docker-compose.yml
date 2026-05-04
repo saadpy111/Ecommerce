@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    container_name: catalog-api
+
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.Api/Dockerfile
+
+    ports:
+      - "5000:8080"
+
+    depends_on:
+      - mongo
+
+    environment:
+    - ASPNETCORE_ENVIRONMENT=Development
+    - ASPNETCORE_URLS=http://+:8080
+    - DatabaseSettings__ConnectionString=mongodb://mongo:27017
+    - DatabaseSettings__DatabaseName=CatalogDb
+
+    networks:
+      - catalog-network
+
+  mongo:
+    image: mongo:7
+    container_name: catalog-mongo
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongo_data:/data/db
+
+    networks:
+      - catalog-network
+
+volumes:
+  mongo_data:
+
+networks:
+  catalog-network:
