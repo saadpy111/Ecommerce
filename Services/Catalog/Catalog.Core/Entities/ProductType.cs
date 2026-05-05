@@ -2,6 +2,6 @@
 {
     public class ProductType:BaseEntity
     {
-        public string Type { get; set; }
+        public string Name { get; set; }
     }
 }
