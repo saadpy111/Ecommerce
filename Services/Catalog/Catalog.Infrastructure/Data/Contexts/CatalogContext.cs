@@ -1,4 +1,4 @@
-﻿using Catalog.Core.Entities;
+using Catalog.Core.Entities;
 using Catalog.Infrastructure.Data.Contexts;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
@@ -26,10 +26,6 @@ namespace Catalog.Infrastructure.Data.Contexts
             Brands = database.GetCollection<ProductBrand>(configuration["DatabaseSettings:BrandsCollection"]);
             Types = database.GetCollection<ProductType>(configuration["DatabaseSettings:TypesCollection"]);
             Products = database.GetCollection<Product>(configuration["DatabaseSettings:ProductsCollection"]);
-
-            _ = BrandContextSeed.SeedBrands(Brands);
-            _ = TypeContextSeed.SeedTypes(Types);
-            _ = ProductContextSeed.SeedDataAsync(Products);
         }
 
     }

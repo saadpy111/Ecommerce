@@ -16,7 +16,6 @@ COPY ["Services/Catalog/Catalog.Api/Catalog.Api.csproj", "Services/Catalog/Catal
 COPY ["Services/Catalog/Catalog.Application/Catalog.Application.csproj", "Services/Catalog/Catalog.Application/"]
 COPY ["Services/Catalog/Catalog.Core/Catalog.Core.csproj", "Services/Catalog/Catalog.Core/"]
 COPY ["Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj", "Services/Catalog/Catalog.Infrastructure/"]
-COPY Services/Catalog/Catalog.Infrastructure/Data/SeedData /src/Services/Catalog/Catalog.Infrastructure/Data/SeedData
 
 RUN dotnet restore "./Services/Catalog/Catalog.Api/Catalog.Api.csproj"
 COPY . .
