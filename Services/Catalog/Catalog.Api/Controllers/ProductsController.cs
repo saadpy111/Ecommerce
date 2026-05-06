@@ -8,9 +8,11 @@ using Catalog.Application.Features.Products.Queries.GetAllProductsByName;
 using Catalog.Application.Features.Products.Commands.CreateProduct;
 using Catalog.Application.Features.Products.Commands.UpdateProduct;
 using Catalog.Application.Features.Products.Commands.DeleteProduct;
+using Catalog.Core.Specs;
 
 namespace Catalog.Api.Controllers
 {
+
     public class ProductsController : BaseApiController
     {
         private readonly IMediator _mediator;
@@ -21,9 +23,10 @@ namespace Catalog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<GetAllProductsQueryResponse>> GetAllProducts()
+        public async Task<ActionResult<GetAllProductsQueryResponse>>
+            GetAllProducts([FromQuery] CatalogSpecParams productParams)
         {
-            var query = new GetAllProductsQueryRequest();
+            var query = new GetAllProductsQueryRequest() { Params  =productParams} ;
             var result = await _mediator.Send(query);
             return Ok(result);
         }

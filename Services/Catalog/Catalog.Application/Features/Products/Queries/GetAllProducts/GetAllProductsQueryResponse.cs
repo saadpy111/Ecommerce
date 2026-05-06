@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Catalog.Application.Dtos;
+using Catalog.Core.Specs;
 
 namespace Catalog.Application.Features.Products.Queries.GetAllProducts
 {
     public class GetAllProductsQueryResponse
     {
-        public List<ProductDto> Products { get; set; }
+        public Pagination<ProductDto> Products { get; set; }
     }
 }

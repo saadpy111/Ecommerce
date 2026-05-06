@@ -9,9 +9,9 @@ namespace Catalog.Infrastructure.DependencyInjection
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddScoped<IBrandRepository, ProductRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ITypeRepository, ProductRepository>();
+            services.AddScoped<IBrandRepository, CatalogRepository>();
+            services.AddScoped<IProductRepository, CatalogRepository>();
+            services.AddScoped<ITypeRepository, CatalogRepository>();
             services.AddScoped<ICatalogContext, CatalogContext>();
 
             return services;

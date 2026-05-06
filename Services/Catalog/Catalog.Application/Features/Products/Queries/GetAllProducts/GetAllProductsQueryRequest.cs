@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using Catalog.Core.Specs;
 using MediatR;
 
 namespace Catalog.Application.Features.Products.Queries.GetAllProducts
 {
     public class GetAllProductsQueryRequest : IRequest<GetAllProductsQueryResponse>
     {
+        public CatalogSpecParams  Params { get; set; }
     }
 }

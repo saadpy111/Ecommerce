@@ -5,6 +5,7 @@ using Catalog.Application.Features.Products.Commands.CreateProduct;
 using Catalog.Application.Features.Products.Commands.UpdateProduct;
 using Catalog.Application.Features.Types.Commands.CreateType;
 using Catalog.Core.Entities;
+using Catalog.Core.Specs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Catalog.Application.Mappers
             //product
             CreateMap<Product, ProductDto>().ReverseMap();
 
-
+            CreateMap<Pagination<Product>, Pagination<ProductDto>>().ReverseMap();
 
             CreateMap<Product, CreateProductCommand>().ReverseMap();
             CreateMap<Product, UpdateProductCommand>().ReverseMap();

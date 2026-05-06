@@ -8,6 +8,7 @@ using AutoMapper;
 using Catalog.Application.Dtos;
 using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
+using Catalog.Core.Specs;
 using MediatR;
 
 namespace Catalog.Application.Features.Products.Queries.GetAllProducts
@@ -25,12 +26,12 @@ namespace Catalog.Application.Features.Products.Queries.GetAllProducts
 
         public async Task<GetAllProductsQueryResponse> Handle(GetAllProductsQueryRequest request, CancellationToken cancellationToken)
         {
-            var products = await _productRepository.GetAllProducts();
-            var productList = _mapper.Map<List<Product>, List<ProductDto>>(products.ToList());
+            var products = await _productRepository.GetAllProducts(request.Params);
+            var paginationProducts = _mapper.Map<Pagination<Product>, Pagination<ProductDto>>(products);
 
             return new GetAllProductsQueryResponse
             {
-                Products = productList
+                Products = paginationProducts
             };
         }
     }
