@@ -16,10 +16,10 @@ services:
       - mongo
 
     environment:
-    - ASPNETCORE_ENVIRONMENT=Development
-    - ASPNETCORE_URLS=http://+:8080
-    - DatabaseSettings__ConnectionString=mongodb://mongo:27017
-    - DatabaseSettings__DatabaseName=CatalogDb
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - DatabaseSettings__ConnectionString=mongodb://mongo:27017
+      - DatabaseSettings__DatabaseName=CatalogDb
 
     networks:
       - catalog-network
@@ -37,8 +37,46 @@ services:
     networks:
       - catalog-network
 
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    container_name: basket-api
+
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.Api/Dockerfile
+
+    ports:
+      - "8001:8080"
+
+    depends_on:
+      - basketdb
+
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - CacheSettings__ConnectionString=basketdb:6379
+
+    networks:
+      - catalog-network
+
+  basketdb:
+    image: redis:alpine
+    container_name: basketdb
+
+    restart: always
+
+    ports:
+      - "6379:6379"
+
+    volumes:
+      - redis_data:/data
+
+    networks:
+      - catalog-network
+
 volumes:
   mongo_data:
+  redis_data:
 
 networks:
   catalog-network:
