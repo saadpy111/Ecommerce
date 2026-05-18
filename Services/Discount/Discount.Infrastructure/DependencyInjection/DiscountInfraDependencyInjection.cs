@@ -1,4 +1,6 @@
-﻿using Discount.Infrastructure.Context;
+﻿using Discount.Core.Repositories;
+using Discount.Infrastructure.Context;
+using Discount.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,7 @@ namespace Discount.Infrastructure.DependencyInjection
              services.AddDbContext<DiscountDbContext>(options =>
               options.UseNpgsql(
              configuration.GetConnectionString("PostgressConnection")));
+            services.AddScoped<IDiscountRepository, DiscountRepository>();
             return services;
         }
     }

@@ -36,7 +36,53 @@ services:
 
     networks:
       - catalog-network
+ 
 
+
+
+  discountdb:
+    image: postgres:17
+
+    container_name: discount-postgres
+
+    environment:
+      POSTGRES_DB: DiscountDb
+      POSTGRES_USER: Admin
+      POSTGRES_PASSWORD: Saadpy11@
+
+    restart: always
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      - catalog-network 
+      
+  pgadmin:
+    image: dpage/pgadmin4
+
+    container_name: pgadmin
+
+    restart: always
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+    ports:
+      - "5050:80"
+
+    depends_on:
+      - discountdb
+
+    networks:
+      - catalog-network      
+      
+      
+       
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
     container_name: basket-api
@@ -74,9 +120,35 @@ services:
     networks:
       - catalog-network
 
+
+
+
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
+
+    container_name: discount-api
+
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.Api/Dockerfile
+
+    ports:
+      - "8002:8080"
+
+    depends_on:
+      - discountdb
+
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__PostgressConnection=Host=discountdb;Port=5432;Database=DiscountDb;Username=Admin;Password=Saadpy11@
+
+    networks:
+      - catalog-network
+
 volumes:
   mongo_data:
   redis_data:
-
+  postgres_data:
 networks:
   catalog-network:
