@@ -1,5 +1,7 @@
-﻿using Discount.Infrastructure.Context;
+﻿using Discount.Grpc.Protos;
+using Discount.Infrastructure.Context;
 using Discount.Infrastructure.DependencyInjection;
+ 
 namespace Discount.Api.DependencyInjection
 {
     public static class DiscountApiDependencyInjection
