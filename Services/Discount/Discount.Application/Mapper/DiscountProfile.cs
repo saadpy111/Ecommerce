@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Discount.Core.Entities;
 using Discount.Grpc.Protos;
 using System;
@@ -14,6 +14,8 @@ namespace Discount.Application.Mapper
         public DiscountProfile()
         {
             CreateMap<CouponModel, Coupon>().ReverseMap();
+            CreateMap<Features.Commands.CreateDiscount.CreateDiscountCommand, Coupon>();
+            CreateMap<Features.Commands.UpdateDiscount.UpdateDiscountCommand, Coupon>();
         }
     }
 }
