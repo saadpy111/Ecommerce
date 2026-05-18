@@ -10,7 +10,7 @@ namespace Discount.Application.DependencyInjection
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetDiscountQuery).Assembly));
-            
+            services.AddGrpc();
             return services;
         }
     }

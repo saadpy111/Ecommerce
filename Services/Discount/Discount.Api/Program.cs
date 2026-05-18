@@ -1,4 +1,5 @@
 using Discount.Api.DependencyInjection;
+using Discount.Api.Services;
 using Discount.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,5 +34,13 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+app.MapGrpcService<DiscountService>();
+
+app.MapGet("/", () =>
+{
+    return "Communication with grpc endpoints must be made through a grpc client";
+});
 
 app.Run();
