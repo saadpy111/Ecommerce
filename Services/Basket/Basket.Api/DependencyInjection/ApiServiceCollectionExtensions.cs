@@ -40,7 +40,7 @@ namespace Basket.Api.DependencyInjection
 
         public static IServiceCollection AddPreServices(this IServiceCollection services , IConfiguration configuration)
         {
-            services.AddApplicationServices();
+            services.AddApplicationServices(configuration);
             services.AddInfrastructureServices(configuration);
 
             return services;

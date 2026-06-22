@@ -18,7 +18,7 @@ namespace Discount.Api.Services
         {
             _mediator = mediator;
         }
-
+       
         public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
         {
             var query = new GetDiscountQuery(request.ProductName);

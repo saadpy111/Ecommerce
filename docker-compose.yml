@@ -101,6 +101,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - CacheSettings__ConnectionString=basketdb:6379
+      - "DiscountSettings__DiscountUrl=http://discount.api:8080"
 
     networks:
       - catalog-network

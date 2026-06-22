@@ -20,11 +20,11 @@ namespace Discount.Infrastructure.Repositories
             using var connection = _context.CreateConnection();
 
             var coupon = await connection.QueryFirstOrDefaultAsync<Coupon>(
-                "SELECT * FROM Coupons WHERE ProductName = @ProductName",
-                new
-                {
-                    ProductName = productName
-                });
+            "SELECT * FROM \"Coupons\" WHERE \"ProductName\" = @ProductName",
+            new
+            {
+                ProductName = productName
+            });
 
             if (coupon == null)
             {
