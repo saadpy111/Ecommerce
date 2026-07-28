@@ -1,3 +1,6 @@
+using Order.Application.DI;
+using Order.Infrastructure.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Register Clean Architecture Application & Infrastructure Services
+builder.Services.AddApplicationServices();
+builder.Services.AddInfraDI(builder.Configuration);
 
 var app = builder.Build();
 
