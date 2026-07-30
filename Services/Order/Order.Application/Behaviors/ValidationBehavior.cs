@@ -26,7 +26,7 @@ namespace Order.Application.Behaviors
                 if (failures.Count != 0)
                 {
 
-                    throw new ValidationException(failures);
+                    throw new Order.Application.Exceptions.ValidationException(failures);
                 }
 
             }

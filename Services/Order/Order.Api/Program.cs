@@ -1,13 +1,41 @@
+using Microsoft.OpenApi;
 using Order.Application.DI;
 using Order.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add Services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+// Register Swagger generation and endpoint explorer
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
+    {
+        Title = "Order Api",
+        Contact = new OpenApiContact
+        {
+            Email = "saadahmadpy@gmail.com",
+            Name = "Saad Ahmed",
+
+        },
+        Description = "Order Api service in microservice ecommerce system .",
+        Version = "V1"
+
+    });
+
+
+});
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1.0);
+});
+
 
 // Register Clean Architecture Application & Infrastructure Services
 builder.Services.AddApplicationServices();
@@ -18,7 +46,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

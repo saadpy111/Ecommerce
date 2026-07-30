@@ -12,9 +12,8 @@ using Order.Application.Features.Orders.Queries.GetOrdersList;
 
 namespace Order.Api.Controllers
 {
-    [ApiController]
-    [Route("api/v1/[controller]")]
-    public class OrdersController : ControllerBase
+
+    public class OrdersController : BaseApiController
     {
         private readonly IMediator _mediator;
 

@@ -7,7 +7,7 @@ namespace Order.Infrastructure.Data
     {
         // Sets
         public DbSet<Order.Core.Entities.Order>  Orders { get; set; }
-        public OrderDbContext(DbContextOptions<OrderDbContext> options) { }
+        public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options) { }
         
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,8 +19,8 @@ namespace Order.Infrastructure.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string con = "Data Source=DESKTOP-VGEBCK1\\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;";
-                optionsBuilder.UseSqlServer("con");
+                string con = "Server=localhost;Database=OrderDb2;User Id=sa;Password=P@ssw0rd123;TrustServerCertificate=True;";
+                optionsBuilder.UseSqlServer(con);
             }
             base.OnConfiguring(optionsBuilder);
         }
