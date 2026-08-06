@@ -56,6 +56,8 @@ builder.Services.AddMassTransit(config =>
     });
 });
 
+builder.Services.AddMassTransitHostedService();
+
 // Register Clean Architecture Application & Infrastructure Services
 builder.Services.AddApplicationServices();
 builder.Services.AddInfraDI(builder.Configuration);
