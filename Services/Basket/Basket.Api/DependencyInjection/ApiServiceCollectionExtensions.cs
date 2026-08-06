@@ -1,5 +1,6 @@
 using Basket.Application.DependencyInjection;
 using Basket.Infrastructure.DependencyInjection;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -33,6 +34,17 @@ namespace Basket.Api.DependencyInjection
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1.0);
             });
+
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ct, cfg) =>
+                {
+
+                    cfg.Host(configuration["EventBusSettings:HostAddress"]);
+                });
+            });
+
+            services.AddMassTransitHostedService();
 
             services.AddPreServices(configuration);
             return services;

@@ -59,6 +59,19 @@ services:
     networks:
       - catalog-network 
       
+  rabbitmq:
+     image: rabbitmq:3-management-alpine
+     container_name: rabbitmq
+     restart: always
+     ports:
+       - "5672:5672"
+       - "15672:15672"
+     networks:
+      - catalog-network 
+
+
+
+
   pgadmin:
     image: dpage/pgadmin4
 
@@ -95,8 +108,10 @@ services:
      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@ssw0rd123' -Q 'select 1'"]
      interval: 10s
      timeout: 10s
-     retries: 3   
-      
+     retries: 3
+     
+   networks:
+     - catalog-network
        
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
@@ -111,12 +126,16 @@ services:
 
     depends_on:
       - basketdb
+      - rabbitmq
+ 
 
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - CacheSettings__ConnectionString=basketdb:6379
       - "DiscountSettings__DiscountUrl=http://discount.api:8080"
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
+ 
 
     networks:
       - catalog-network
@@ -170,9 +189,13 @@ services:
     environment:
     - ASPNETCORE_ENVIRONMENT=Development
     - ASPNETCORE_URLS=http://+:8080
+    - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
     - "ConnectionStrings__OrderingConnectionString=Server=orderdb;Database=OrderDb2;User Id=sa;Password=P@ssw0rd123;TrustServerCertificate=True;"
     depends_on:
       - orderdb
+      - rabbitmq
+    networks:
+      - catalog-network
     ports:
      - "8003:8080"
 volumes:

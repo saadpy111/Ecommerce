@@ -1,4 +1,7 @@
+using EventBus.Messages.Common;
+using MassTransit;
 using Microsoft.OpenApi;
+using Order.Api.EventBusConsumer;
 using Order.Application.DI;
 using Order.Infrastructure.DependencyInjection;
 
@@ -36,6 +39,22 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1.0);
 });
 
+builder.Services.AddMassTransit(config =>
+{
+    //Mark this as consumer
+    config.AddConsumer<BasketOrderingConsumer>();
+
+    config.UsingRabbitMq((ctx, cfg) =>
+    {
+
+        cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+        //provide the queue name with consumer
+        cfg.ReceiveEndpoint(EventBusConstant.BasketCheckoutQueue, c =>
+        {
+            c.ConfigureConsumer<BasketOrderingConsumer>(ctx);
+        });
+    });
+});
 
 // Register Clean Architecture Application & Infrastructure Services
 builder.Services.AddApplicationServices();
