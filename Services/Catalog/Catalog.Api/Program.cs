@@ -1,10 +1,13 @@
 using Catalog.Api.DependencyInjection;
 using Catalog.Infrastructure.Data.Contexts;
+using Common.Logging;
 using Microsoft.OpenApi;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiServices();
+builder.Host.UseSerilog(Logging.ConfigureLogger);
 
 
 var app = builder.Build();

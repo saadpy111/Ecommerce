@@ -1,9 +1,11 @@
+using Common.Logging;
 using EventBus.Messages.Common;
 using MassTransit;
 using Microsoft.OpenApi;
 using Order.Api.EventBusConsumer;
 using Order.Application.DI;
 using Order.Infrastructure.DependencyInjection;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +41,7 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1.0);
 });
 
+builder.Host.UseSerilog(Logging.ConfigureLogger);
 builder.Services.AddMassTransit(config =>
 {
     //Mark this as consumer

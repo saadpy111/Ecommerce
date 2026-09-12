@@ -1,6 +1,9 @@
 using Basket.Api.DependencyInjection;
+using Common.Logging;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog(Logging.ConfigureLogger);
 
 // Add services to the container.
 builder.Services.AddApiServices(builder.Configuration);

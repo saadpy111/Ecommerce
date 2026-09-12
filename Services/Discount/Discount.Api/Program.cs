@@ -1,7 +1,9 @@
+using Common.Logging;
 using Discount.Api.DependencyInjection;
 using Discount.Api.Services;
 using Discount.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddDiscountApiDependencyInjection(builder.Configuration);
+
+builder.Host.UseSerilog(Logging.ConfigureLogger);
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
