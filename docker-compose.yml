@@ -12,12 +12,14 @@ services:
 
     depends_on:
       - mongo
+      - elasticsearch
 
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - DatabaseSettings__ConnectionString=mongodb://mongo:27017
       - DatabaseSettings__DatabaseName=CatalogDb
+      - ElasticConfiguration__Uri=http://elasticsearch:9200
 
     networks:
       - catalog-network
@@ -35,6 +37,7 @@ services:
     networks:
       - catalog-network
  
+
 
 
 
@@ -127,6 +130,7 @@ services:
     depends_on:
       - basketdb
       - rabbitmq
+      - elasticsearch
  
 
     environment:
@@ -135,6 +139,7 @@ services:
       - CacheSettings__ConnectionString=basketdb:6379
       - "DiscountSettings__DiscountUrl=http://discount.api:8080"
       - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200"
  
 
     networks:
@@ -172,11 +177,13 @@ services:
 
     depends_on:
       - discountdb
+      - elasticsearch
 
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__PostgressConnection=Host=discountdb;Port=5432;Database=DiscountDb;Username=Admin;Password=Saadpy11@
+      - ElasticConfiguration__Uri=http://elasticsearch:9200
 
     networks:
       - catalog-network
@@ -191,19 +198,51 @@ services:
     - ASPNETCORE_URLS=http://+:8080
     - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
     - "ConnectionStrings__OrderingConnectionString=Server=orderdb;Database=OrderDb2;User Id=sa;Password=P@ssw0rd123;TrustServerCertificate=True;"
+    - "ElasticConfiguration__Uri=http://elasticsearch:9200"
     depends_on:
       - orderdb
       - rabbitmq
+      - elasticsearch
     networks:
       - catalog-network
     ports:
      - "8003:8080"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - catalog-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.17.0
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - catalog-network
+
 volumes:
   mongo_data:
   redis_data:
   postgres_data:
   orderdb-data:
+  elasticsearch_data:
 
 networks:
   catalog-network:
+
 
